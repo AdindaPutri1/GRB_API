@@ -41,8 +41,3 @@ Berikut adalah daftar use case utama API yang mencakup operasi SQL, DML, dan TCL
 - API ini mencakup lebih dari 11 use case utama.
 - Setiap rute API mengimplementasikan operasi CRUD (Create, Read, Update, Delete) pada tabel-tabel dalam database.
 - Deskripsi lebih detail dan spesifikasi API dapat ditemukan di file terkait dalam direktori `routes`.
-
-Jika Anda memerlukan informasi lebih lanjut atau memiliki pertanyaan, jangan ragu untuk menghubungi saya.
-
-Terima kasih.
-
