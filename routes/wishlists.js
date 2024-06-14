@@ -218,22 +218,29 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE
-router.delete("/:id", async (req, res) => {
+// DELETE
+router.delete("/:wishlist_id", async (req, res) => {
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
 
-    const id = req.params.id;
-    const query = "DELETE FROM wishlists WHERE id = $1 RETURNING *";
-    const result = await client.query(query, [id]);
+    const wishlist_id = req.params.wishlist_id;
+
+    // Delete wishlist items related to the wishlist_id
+    const deleteItemsQuery = "DELETE FROM wishlistitems WHERE wishlist_id = $1";
+    await client.query(deleteItemsQuery, [wishlist_id]);
+
+    // Now delete the wishlist itself
+    const deleteWishlistQuery = "DELETE FROM wishlists WHERE wishlist_id = $1 RETURNING *";
+    const result = await client.query(deleteWishlistQuery, [wishlist_id]);
 
     if (result.rows.length === 0) {
       await client.query("ROLLBACK");
-      return res.status(404).json({ error: "Record not found" });
+      return res.status(404).json({ error: "Wishlist not found" });
     }
 
     await client.query("COMMIT");
-    res.status(200).json({ message: "Record deleted successfully" });
+    res.status(200).json({ message: "Wishlist deleted successfully" });
   } catch (err) {
     await client.query("ROLLBACK");
     console.error("Error deleting wishlist:", err.message);
