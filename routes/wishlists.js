@@ -218,7 +218,6 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE
-// DELETE
 router.delete("/:wishlist_id", async (req, res) => {
   const client = await pool.connect();
   try {
