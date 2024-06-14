@@ -35,11 +35,11 @@ router.post("/:wishlist_id/books", async (req, res) => {
     await client.query("BEGIN");
 
     const wishlist_id = req.params.wishlist_id;
-    const { book_title, first_name, last_name } = req.body;
+    const {title, first_name, last_name } = req.body;
 
     console.log(`Received request to add book to wishlist`);
     console.log(`Wishlist ID: ${wishlist_id}`);
-    console.log(`Book Title: ${book_title}`);
+    console.log(`Book Title: ${title}`);
     console.log(`Customer First Name: ${first_name}`);
     console.log(`Customer Last Name: ${last_name}`);
 
@@ -65,7 +65,7 @@ router.post("/:wishlist_id/books", async (req, res) => {
 
     // Find the book by title
     const bookQuery = "SELECT book_id FROM books WHERE title = $1";
-    const bookResult = await client.query(bookQuery, [book_title]);
+    const bookResult = await client.query(bookQuery, [title]);
 
     if (bookResult.rows.length === 0) {
       console.log("Book not found with provided title");
